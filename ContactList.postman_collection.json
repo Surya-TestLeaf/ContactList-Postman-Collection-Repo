@@ -1,0 +1,298 @@
+{
+	"info": {
+		"_postman_id": "dbebbc7e-f6fb-4b81-b1ea-08370e9c9434",
+		"name": "Contact List",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "End Point Testing",
+			"item": [
+				{
+					"name": "Add Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.environment.set(\"contactId\", jsonData._id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"firstName\": \"{{firstName}}\",\r\n        \"lastName\": \"{{lastName}}\",\r\n        \"email\": \"{{email}}\",\r\n        \"location\": {\r\n            \"city\": \"{{city}}\",\r\n            \"country\": \"{{country}}\"\r\n        },\r\n        \"employer\": {\r\n            \"jobTitle\": \"{{JobTitle}}\",\r\n            \"company\": \"{{company}}\"\r\n        },\r\n        \"__v\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "3.13.86.142:3000/contacts",
+							"host": [
+								"3",
+								"13",
+								"86",
+								"142"
+							],
+							"port": "3000",
+							"path": [
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"\r",
+									"pm.test(\"Correct Contact is returned\", function () {\r",
+									"pm.expect(pm.response.text()).to.include(\"amijackson@ooutlook.com\")\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"pm.response.to.have.header(\"Content-Type\");\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"\r",
+									"pm.test(\"Correct firstName is returned\", function () {\r",
+									"pm.expect(jsonData.firstName).to.eql(environment.firstName);\r",
+									"\r",
+									"pm.test(\"Company name is LTI\", function () {\r",
+									"pm.expect(jsonData.employer.company).to.eql(\"LTI\");\r",
+									"}); \r",
+									"});\r",
+									"});\r",
+									"});\r",
+									"});\r",
+									"});\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "3.13.86.142:3000/contacts/{{contactId}}",
+							"host": [
+								"3",
+								"13",
+								"86",
+								"142"
+							],
+							"port": "3000",
+							"path": [
+								"contacts",
+								"{{contactId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Contact",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "3.13.86.142:3000/contacts/{{contactId}}",
+									"host": [
+										"3",
+										"13",
+										"86",
+										"142"
+									],
+									"port": "3000",
+									"path": [
+										"contacts",
+										"{{contactId}}"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Get Contact List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "3.13.86.142:3000/contacts",
+							"host": [
+								"3",
+								"13",
+								"86",
+								"142"
+							],
+							"port": "3000",
+							"path": [
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Contact - RandomData",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.environment.set(\"contactId\", jsonData._id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"firstName\": \"{{$randomFirstName}}\",\r\n        \"lastName\": \"{{$randomLastName}}\",\r\n        \"email\": \"{{$randomEmail}}\",\r\n        \"location\": {\r\n            \"city\": \"{{$randomCity}}\",\r\n            \"country\": \"{{$randomCountry}}\"\r\n        },\r\n        \"employer\": {\r\n            \"jobTitle\": \"{{$randomJobTitle}}\",\r\n            \"company\": \"{{$randomCompanyName}}\"\r\n        },\r\n        \"__v\": 0\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "3.13.86.142:3000/contacts",
+							"host": [
+								"3",
+								"13",
+								"86",
+								"142"
+							],
+							"port": "3000",
+							"path": [
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Negative Testing",
+			"item": [
+				{
+					"name": "Get Contact  Not Found",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"pm.test(\"Return Not Found\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Not Found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "3.13.86.142:3000/contacts/1",
+							"host": [
+								"3",
+								"13",
+								"86",
+								"142"
+							],
+							"port": "3000",
+							"path": [
+								"contacts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contact  - Mssing First Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Missing First Name error is returned\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"First Name is required\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"firstName\": \"\",\r\n    \"lastName\": \"{{lastName}}\",\r\n    \"email\": \"amijackson@ooutlook.com\",\r\n    \"location\": {\r\n        \"city\": \"Los Angeles, CA\",\r\n        \"country\": \"USA\"\r\n    },\r\n    \"employer\": {\r\n        \"jobTitle\": \"Software Consultant\",\r\n        \"company\": \"{{company}}\"\r\n    },\r\n    \"__v\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "3.13.86.142:3000/contacts",
+							"host": [
+								"3",
+								"13",
+								"86",
+								"142"
+							],
+							"port": "3000",
+							"path": [
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
